@@ -9,7 +9,7 @@ import { User } from './entities/user.entity';
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-  ) {}
+  ) { }
 
   async create(createUserInput: CreateUserInput) {
     return await this.userRepository.save(createUserInput);
@@ -19,9 +19,9 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
-  async findOne(id: string) {
+  async findOne(email: string) {
     return await this.userRepository.findOneOrFail({
-      where: { id },
+      where: { email },
     });
   }
 
