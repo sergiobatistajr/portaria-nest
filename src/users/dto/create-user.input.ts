@@ -1,20 +1,16 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsEmail, IsString, Length } from 'class-validator';
+import { IsString, Length } from 'class-validator';
+import { UserRoleType } from '../entities/user.entity';
 
 @InputType()
 export class CreateUserInput {
   @IsString()
   @Field()
-  firstName: string;
+  name: string;
 
   @IsString()
   @Field()
-  lastName: string;
-
-  @IsString()
-  @IsEmail()
-  @Field()
-  email: string;
+  username: string;
 
   @Length(8, 64)
   @IsString({
@@ -25,5 +21,5 @@ export class CreateUserInput {
 
   @IsString()
   @Field()
-  role: string;
+  role: UserRoleType;
 }

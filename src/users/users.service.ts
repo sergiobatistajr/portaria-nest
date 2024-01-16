@@ -19,9 +19,9 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
-  async findOne(email: string) {
+  async findOne(username: string) {
     return await this.userRepository.findOneOrFail({
-      where: { email },
+      where: { username },
     });
   }
 

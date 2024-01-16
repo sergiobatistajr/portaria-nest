@@ -1,5 +1,8 @@
 import { ObjectType, Field, HideField } from '@nestjs/graphql';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+
+export type UserRoleType = 'admin' | 'ghost' | 'user';
+
 @Entity()
 @ObjectType()
 export class User {
@@ -9,26 +12,28 @@ export class User {
 
   @Column()
   @Field()
-  firstName: string;
+  name: string;
 
   @Column()
   @Field()
-  lastName: string;
-
-  @Column()
-  @Field()
-  email: string;
+  username: string;
 
   @Column()
   @Field()
   @HideField()
   password: string;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: ['admin', 'user', 'ghost'],
+    default: 'ghost',
+  })
   @Field()
-  role: string;
+  role: UserRoleType;
 
   @Column({ default: true })
+  @Field()
+  @HideField()
   isActive: boolean;
 
   @Column({ default: new Date() })
