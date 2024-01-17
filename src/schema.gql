@@ -2,10 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateGuestInput {
+  cpf: String!
+  passengers: Int!
+  personId: String!
+}
+
 input CreatePersonInput {
   createdBy: String!
   name: String!
-  personType: String!
 }
 
 input CreateUserInput {
@@ -20,11 +25,20 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Guest {
+  cpf: String!
+  id: String!
+  passengers: Int!
+}
+
 type Mutation {
+  createGuest(createGuestInput: CreateGuestInput!): Guest!
   createPerson(createPersonInput: CreatePersonInput!): Person!
   createUser(createUserInput: CreateUserInput!): User!
+  removeGuest(id: String!): Guest!
   removePerson(id: String!): Person!
   removeUser(id: String!): User!
+  updateGuest(updateGuestInput: UpdateGuestInput!): Guest!
   updatePerson(updatePersonInput: UpdatePersonInput!): Person!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
@@ -34,22 +48,29 @@ type Person {
   createdBy: String!
   id: String!
   name: String!
-  personType: String!
   updatedAt: DateTime!
 }
 
 type Query {
   findById(id: String!): Person!
+  guest(id: String!): Guest!
+  guests: [Guest!]!
   persons: [Person!]!
   user(username: String!): User!
   users: [User!]!
+}
+
+input UpdateGuestInput {
+  cpf: String
+  id: String!
+  passengers: Int
+  personId: String
 }
 
 input UpdatePersonInput {
   createdBy: String
   id: String!
   name: String
-  personType: String
 }
 
 input UpdateUserInput {

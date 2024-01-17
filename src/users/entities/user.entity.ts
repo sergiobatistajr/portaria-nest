@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 export type UserRoleType = 'admin' | 'ghost' | 'user';
 
-@Entity()
+@Entity('users')
 @ObjectType()
 export class User {
   @PrimaryGeneratedColumn('uuid')

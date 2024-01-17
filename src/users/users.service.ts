@@ -8,19 +8,19 @@ import { User } from './entities/user.entity';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
-  ) { }
+    @InjectRepository(User) private usersRepository: Repository<User>,
+  ) {}
 
   async create(createUserInput: CreateUserInput) {
-    return await this.userRepository.save(createUserInput);
+    return await this.usersRepository.save(createUserInput);
   }
 
   async findAll() {
-    return await this.userRepository.find();
+    return await this.usersRepository.find();
   }
 
   async findOne(username: string) {
-    return await this.userRepository.findOneOrFail({
+    return await this.usersRepository.findOneOrFail({
       where: { username },
     });
   }
@@ -30,11 +30,11 @@ export class UsersService {
       updatedAt: new Date(),
       ...updateUserInput,
     };
-    await this.userRepository.update(id, userUpdate);
+    await this.usersRepository.update(id, userUpdate);
     return userUpdate;
   }
 
   async remove(id: string) {
-    return await this.userRepository.delete(id);
+    return await this.usersRepository.delete(id);
   }
 }

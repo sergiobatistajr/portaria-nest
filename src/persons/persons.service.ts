@@ -8,28 +8,28 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class PersonsService {
   constructor(
-    @InjectRepository(Person) private personRepository: Repository<Person>,
-  ) { }
+    @InjectRepository(Person) private personsRepository: Repository<Person>,
+  ) {}
 
   async create(createPersonInput: CreatePersonInput) {
-    return await this.personRepository.save(createPersonInput);
+    return await this.personsRepository.save(createPersonInput);
   }
 
   async findAll() {
-    return await this.personRepository.find();
+    return await this.personsRepository.find();
   }
 
   async findById(id: string) {
-    return await this.personRepository.findOneOrFail({
+    return await this.personsRepository.findOneOrFail({
       where: { id },
     });
   }
 
   async update(id: string, updatePersonInput: UpdatePersonInput) {
-    return await this.personRepository.update(id, updatePersonInput);
+    return await this.personsRepository.update(id, updatePersonInput);
   }
 
   async remove(id: string) {
-    return await this.personRepository.delete(id);
+    return await this.personsRepository.delete(id);
   }
 }
