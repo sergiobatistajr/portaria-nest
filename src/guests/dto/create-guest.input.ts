@@ -1,17 +1,25 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
-import { IsInt, IsString, IsUUID } from 'class-validator';
+import { InputType, Field } from '@nestjs/graphql';
+import { IsEnum, IsString, IsUUID } from 'class-validator';
 
 @InputType()
 export class CreateGuestInput {
   @IsString()
   @Field()
+  name: string;
+
+  @IsString()
+  @Field()
   cpf: string;
 
-  @IsInt()
-  @Field(() => Int)
-  passengers: number;
+  @Field()
+  @IsEnum({
+    Guest: 'guest',
+    Deliveryman: 'deliveryman',
+    Employee: 'employee',
+  })
+  guestType: string;
 
   @IsUUID()
   @Field()
-  personId: string;
+  userId: string;
 }

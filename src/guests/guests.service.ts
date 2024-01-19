@@ -9,13 +9,17 @@ import { Repository } from 'typeorm';
 export class GuestsService {
   constructor(
     @InjectRepository(Guest) private guestsRepository: Repository<Guest>,
-  ) {}
+  ) { }
   async create(createGuestInput: CreateGuestInput) {
     return await this.guestsRepository.save(createGuestInput);
   }
 
   async findAll() {
-    return await this.guestsRepository.find();
+    return await this.guestsRepository.find({
+      relations: {
+        user: true,
+      },
+    });
   }
 
   async findOne(id: string) {

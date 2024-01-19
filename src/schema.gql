@@ -4,13 +4,9 @@
 
 input CreateGuestInput {
   cpf: String!
-  passengers: Int!
-  personId: String!
-}
-
-input CreatePersonInput {
-  createdBy: String!
+  guestType: String!
   name: String!
+  userId: String!
 }
 
 input CreateUserInput {
@@ -27,50 +23,37 @@ scalar DateTime
 
 type Guest {
   cpf: String!
+  createAt: DateTime!
+  guestType: String!
   id: String!
-  passengers: Int!
+  name: String!
+  updatedAt: DateTime!
+  user: User!
+  userId: String!
 }
 
 type Mutation {
   createGuest(createGuestInput: CreateGuestInput!): Guest!
-  createPerson(createPersonInput: CreatePersonInput!): Person!
   createUser(createUserInput: CreateUserInput!): User!
   removeGuest(id: String!): Guest!
-  removePerson(id: String!): Person!
   removeUser(id: String!): User!
   updateGuest(updateGuestInput: UpdateGuestInput!): Guest!
-  updatePerson(updatePersonInput: UpdatePersonInput!): Person!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
-type Person {
-  createdAt: DateTime!
-  createdBy: String!
-  id: String!
-  name: String!
-  updatedAt: DateTime!
-}
-
 type Query {
-  findById(id: String!): Person!
   guest(id: String!): Guest!
   guests: [Guest!]!
-  persons: [Person!]!
   user(username: String!): User!
   users: [User!]!
 }
 
 input UpdateGuestInput {
   cpf: String
-  id: String!
-  passengers: Int
-  personId: String
-}
-
-input UpdatePersonInput {
-  createdBy: String
+  guestType: String
   id: String!
   name: String
+  userId: String
 }
 
 input UpdateUserInput {
@@ -83,6 +66,7 @@ input UpdateUserInput {
 
 type User {
   createAt: DateTime!
+  guests: [Guest!]!
   id: String!
   isActive: Boolean!
   name: String!

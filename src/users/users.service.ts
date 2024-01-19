@@ -9,14 +9,18 @@ import { User } from './entities/user.entity';
 export class UsersService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
-  ) {}
+  ) { }
 
   async create(createUserInput: CreateUserInput) {
     return await this.usersRepository.save(createUserInput);
   }
 
   async findAll() {
-    return await this.usersRepository.find();
+    return await this.usersRepository.find({
+      relations: {
+        guests: true,
+      },
+    });
   }
 
   async findOne(username: string) {

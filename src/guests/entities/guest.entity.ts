@@ -1,12 +1,6 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Person } from 'src/persons/entities/person.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { ObjectType, Field } from '@nestjs/graphql';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity('guests')
 @ObjectType()
@@ -17,13 +11,33 @@ export class Guest {
 
   @Column()
   @Field()
-  cpf: string;
+  name: string;
 
   @Column()
-  @Field(() => Int)
-  passengers: number;
+  @Field()
+  cpf: string;
 
-  @OneToOne(() => Person)
-  @JoinColumn()
-  person: Person;
+  @Column({
+    type: 'enum',
+    enum: ['guest', 'deliveryman', 'employee'],
+    default: 'guest',
+  })
+  @Field()
+  guestType: string;
+
+  @Column({ default: new Date() })
+  @Field()
+  createAt: Date;
+
+  @Column({ default: new Date() })
+  @Field()
+  updatedAt: Date;
+
+  @Column()
+  @Field()
+  userId: string;
+
+  @ManyToOne(() => User, (user) => user.guests)
+  @Field(() => User)
+  user: User;
 }

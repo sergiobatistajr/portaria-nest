@@ -5,8 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
-import { PersonsModule } from './persons/persons.module';
-import { Person } from './persons/entities/person.entity';
 import { GuestsModule } from './guests/guests.module';
 import { Guest } from './guests/entities/guest.entity';
 @Module({
@@ -23,13 +21,12 @@ import { Guest } from './guests/entities/guest.entity';
       username: 'local_user',
       password: 'local_password',
       database: 'local_db',
-      entities: [User, Person, Guest],
+      entities: [User, Guest],
       synchronize: true,
       autoLoadEntities: true,
     }),
     UsersModule,
-    PersonsModule,
     GuestsModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

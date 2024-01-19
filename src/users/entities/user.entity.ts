@@ -1,10 +1,16 @@
 import { ObjectType, Field, HideField } from '@nestjs/graphql';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
-export type UserRoleType = 'admin' | 'ghost' | 'user';
+import { Guest } from 'src/guests/entities/guest.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  Unique,
+  OneToMany,
+} from 'typeorm';
 
 @Entity('users')
 @ObjectType()
+@Unique(['username'])
 export class User {
   @PrimaryGeneratedColumn('uuid')
   @Field()
@@ -29,7 +35,7 @@ export class User {
     default: 'ghost',
   })
   @Field()
-  role: UserRoleType;
+  role: string;
 
   @Column({ default: true })
   @Field()
@@ -43,4 +49,8 @@ export class User {
   @Column({ default: new Date() })
   @Field()
   updatedAt: Date;
+
+  @OneToMany(() => Guest, (guest) => guest.user)
+  @Field(() => [Guest])
+  guests: Guest[];
 }
